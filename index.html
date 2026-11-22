@@ -1,0 +1,1066 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>BodyBlueprint | HealthHub</title>
+
+    <!-- Show dashboard only if logged in, otherwise show login screen -->
+    <script>
+        try {
+            if (localStorage.getItem("bbSession")) {
+                document.documentElement.classList.add("logged-in");
+            }
+        } catch (e) {}
+    </script>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
+        rel="stylesheet">
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <!-- =====================================================
+         LOGIN / SIGNUP SCREEN
+    ===================================================== -->
+
+    <div id="authScreen">
+
+        <section class="auth-hero">
+
+            <div class="a-orb a-orb-one"></div>
+            <div class="a-orb a-orb-two"></div>
+
+            <div class="brand">
+                <div class="brand-icon">✚</div>
+                <div>
+                    <h2>Body<span>Blueprint</span></h2>
+                    <p>HEALTHHUB</p>
+                </div>
+            </div>
+
+            <div class="hero-text">
+                <span class="eyebrow">WELCOME TO YOUR HEALTH JOURNEY</span>
+                <h1>Build a healthier<br>version of <span>you.</span></h1>
+                <p>
+                    Track your body metrics, hydration and sleep.
+                    Small improvements create lasting results.
+                </p>
+
+                <div class="feature-list">
+                    <div><span>⌁</span> BMI &amp; BMR calculator</div>
+                    <div><span>◉</span> Hydration tracking</div>
+                    <div><span>☾</span> Sleep insights</div>
+                    <div><span>▥</span> 7-day analytics</div>
+                </div>
+            </div>
+
+            <div class="a-tag a-tag-one">✦ Stay Healthy</div>
+            <div class="a-tag a-tag-two">♡ Wellness First</div>
+
+        </section>
+
+        <section class="auth-panel">
+
+            <div class="auth-card">
+
+                <div class="auth-tabs">
+                    <button type="button" class="tab active" id="tabLogin">Sign In</button>
+                    <button type="button" class="tab" id="tabSignup">Create Account</button>
+                </div>
+
+                <div class="auth-heading">
+                    <h2 id="authTitle">Welcome back 👋</h2>
+                    <p id="authSubtitle">Sign in to continue to your dashboard.</p>
+                </div>
+
+                <div class="auth-message" id="authMessage"></div>
+
+                <!-- LOGIN FORM -->
+
+                <form id="loginForm" novalidate>
+
+                    <div class="input-group">
+                        <label for="loginEmail">Email Address</label>
+                        <input type="email" id="loginEmail" placeholder="you@example.com" autocomplete="email">
+                    </div>
+
+                    <div class="input-group">
+                        <label for="loginPassword">Password</label>
+                        <div class="password-wrap">
+                            <input type="password" id="loginPassword" placeholder="Enter your password"
+                                autocomplete="current-password">
+                            <button type="button" class="toggle-pass" data-target="loginPassword">Show</button>
+                        </div>
+                    </div>
+
+                    <button type="submit" class="primary-btn">Sign In →</button>
+
+                </form>
+
+                <!-- SIGNUP FORM -->
+
+                <form id="signupForm" class="hidden" novalidate>
+
+                    <div class="input-group">
+                        <label for="signupName">Full Name</label>
+                        <input type="text" id="signupName" placeholder="Your name" autocomplete="name">
+                    </div>
+
+                    <div class="input-group">
+                        <label for="signupEmail">Email Address</label>
+                        <input type="email" id="signupEmail" placeholder="you@example.com" autocomplete="email">
+                    </div>
+
+                    <div class="input-group">
+                        <label for="signupPassword">Password</label>
+                        <div class="password-wrap">
+                            <input type="password" id="signupPassword" placeholder="At least 6 characters"
+                                autocomplete="new-password">
+                            <button type="button" class="toggle-pass" data-target="signupPassword">Show</button>
+                        </div>
+                    </div>
+
+                    <div class="input-group">
+                        <label for="signupConfirm">Confirm Password</label>
+                        <div class="password-wrap">
+                            <input type="password" id="signupConfirm" placeholder="Re-enter your password"
+                                autocomplete="new-password">
+                            <button type="button" class="toggle-pass" data-target="signupConfirm">Show</button>
+                        </div>
+                    </div>
+
+                    <button type="submit" class="primary-btn">Create Account →</button>
+
+                </form>
+
+                <p class="switch-text" id="switchText">
+                    Don't have an account? <a href="#" id="switchLink">Create one</a>
+                </p>
+
+            </div>
+
+            <div class="auth-disclaimer">
+                <b>Note:</b> Accounts are stored locally in this browser only. BodyBlueprint provides general
+                wellness information and is not a medical diagnostic tool.
+            </div>
+
+        </section>
+
+    </div>
+
+
+    <!-- =====================================================
+         DASHBOARD (your original code)
+    ===================================================== -->
+
+    <div class="app-container">
+
+        <!-- SIDEBAR -->
+
+        <aside class="sidebar">
+
+            <div class="brand">
+                <div class="brand-icon">✚</div>
+
+                <div>
+                    <h2>Body<span>Blueprint</span></h2>
+                    <p>HEALTHHUB</p>
+                </div>
+            </div>
+
+            <div class="sidebar-label">WORKSPACE</div>
+
+            <nav class="navigation">
+
+                <a href="#dashboard" class="nav-item active">
+                    <span>▦</span> Dashboard
+                </a>
+
+                <a href="#metrics" class="nav-item">
+                    <span>⌁</span> Body Metrics
+                </a>
+
+                <a href="#hydration" class="nav-item">
+                    <span>◉</span> Hydration
+                </a>
+
+                <a href="#sleep" class="nav-item">
+                    <span>☾</span> Sleep Tracker
+                </a>
+
+                <a href="#wellness" class="nav-item">
+                    <span>♡</span> Wellness Insights
+                </a>
+
+                <a href="#analytics" class="nav-item">
+                    <span>▥</span> Analytics
+                </a>
+
+            </nav>
+
+            <div class="sidebar-bottom">
+
+                <div class="sidebar-tip">
+                    <div class="tip-icon">✦</div>
+
+                    <h3>Small steps.</h3>
+                    <h3>Big changes.</h3>
+
+                    <p>Your health journey starts with today's choices.</p>
+                </div>
+
+                <div class="profile">
+                    <div class="avatar">U</div>
+
+                    <div>
+                        <h4 id="sidebarName">Your Profile</h4>
+                        <p>Personal Dashboard</p>
+                    </div>
+                </div>
+
+            </div>
+
+        </aside>
+
+
+        <!-- MAIN CONTENT -->
+
+        <main class="main-content">
+
+            <!-- HEADER -->
+
+            <header class="topbar">
+
+                <div>
+                    <p class="breadcrumb">HEALTHHUB / OVERVIEW</p>
+                    <h1>Good day, <span id="welcomeName">Explorer</span> 👋</h1>
+                    <p class="subtitle">Your health journey, all in one place.</p>
+                </div>
+
+                <div class="topbar-right">
+
+                    <div class="date-box">
+                        <span>◷</span>
+                        <span id="currentDate"></span>
+                    </div>
+
+                    <button class="settings-btn" onclick="openProfile()">⚙</button>
+
+                    <button class="logout-btn" onclick="logout()">⎋ Logout</button>
+
+                </div>
+
+            </header>
+
+
+            <!-- DASHBOARD -->
+
+            <section id="dashboard">
+
+                <div class="section-heading">
+
+                    <div>
+                        <h2>Your Health Overview</h2>
+                        <p>Here's what's happening with your body today.</p>
+                    </div>
+
+                    <span class="live-badge">● LIVE TRACKING</span>
+
+                </div>
+
+
+                <!-- WELLNESS HERO -->
+
+                <div class="hero-card">
+
+                    <div class="hero-content">
+
+                        <span class="eyebrow">YOUR DAILY HEALTH STATUS</span>
+
+                        <h2>Build a healthier<br>version of <span>you.</span></h2>
+
+                        <p>
+                            Track your body metrics, hydration and sleep.
+                            Small improvements create lasting results.
+                        </p>
+
+                        <a href="#metrics" class="hero-btn">Explore My Health →</a>
+
+                    </div>
+
+                    <div class="hero-visual">
+
+                        <div class="orb orb-one"></div>
+                        <div class="orb orb-two"></div>
+
+                        <div class="hero-circle">
+                            <span>✚</span>
+                        </div>
+
+                        <div class="floating-tag tag-one">✦ Stay Healthy</div>
+                        <div class="floating-tag tag-two">♡ Wellness First</div>
+
+                    </div>
+
+                </div>
+
+
+                <!-- STAT CARDS -->
+
+                <div class="stats-grid">
+
+                    <div class="stat-card blue-card">
+
+                        <div class="stat-top">
+                            <span>BMI</span>
+                            <span class="stat-icon">⌁</span>
+                        </div>
+
+                        <h2 id="bmiValue">--</h2>
+                        <p id="bmiStatus">Enter your body details</p>
+
+                        <div class="stat-footer">BODY MASS INDEX</div>
+
+                    </div>
+
+
+                    <div class="stat-card purple-card">
+
+                        <div class="stat-top">
+                            <span>BMR</span>
+                            <span class="stat-icon">ϟ</span>
+                        </div>
+
+                        <h2 id="bmrValue">--</h2>
+                        <p>Estimated kcal / day</p>
+
+                        <div class="stat-footer">BASAL METABOLIC RATE</div>
+
+                    </div>
+
+
+                    <div class="stat-card cyan-card">
+
+                        <div class="stat-top">
+                            <span>WATER</span>
+                            <span class="stat-icon">◉</span>
+                        </div>
+
+                        <h2 id="waterValue">0 <small>ml</small></h2>
+                        <p id="waterStatus">Daily hydration</p>
+
+                        <div class="progress-track">
+                            <div id="waterProgress" class="progress-fill"></div>
+                        </div>
+
+                    </div>
+
+
+                    <div class="stat-card orange-card">
+
+                        <div class="stat-top">
+                            <span>SLEEP</span>
+                            <span class="stat-icon">☾</span>
+                        </div>
+
+                        <h2 id="sleepValue">0 <small>hrs</small></h2>
+                        <p id="sleepStatus">Daily sleep duration</p>
+
+                        <div class="progress-track">
+                            <div id="sleepProgress" class="progress-fill"></div>
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <!-- MAIN DASHBOARD GRID -->
+
+                <div class="dashboard-grid">
+
+                    <!-- WELLNESS SCORE -->
+
+                    <div class="panel wellness-panel">
+
+                        <div class="panel-heading">
+
+                            <div>
+                                <h3>Daily Wellness Index</h3>
+                                <p>Your overall health performance</p>
+                            </div>
+
+                            <span class="panel-menu">•••</span>
+
+                        </div>
+
+                        <div class="score-container">
+
+                            <div class="score-ring" id="scoreRing">
+
+                                <div class="score-inner">
+
+                                    <h1 id="wellnessScore">0</h1>
+                                    <p>/ 100</p>
+
+                                    <span>WELLNESS</span>
+
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                        <div class="score-status" id="scoreStatus">
+                            Getting Started
+                        </div>
+
+                        <p class="score-description" id="scoreDescription">
+                            Complete your daily health activities to calculate your wellness score.
+                        </p>
+
+                        <div class="score-legend">
+
+                            <div>
+                                <span class="legend-dot blue-dot"></span>
+                                BMI Stability
+                                <b>30%</b>
+                            </div>
+
+                            <div>
+                                <span class="legend-dot purple-dot"></span>
+                                Hydration
+                                <b>35%</b>
+                            </div>
+
+                            <div>
+                                <span class="legend-dot cyan-dot"></span>
+                                Sleep
+                                <b>35%</b>
+                            </div>
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- DAILY GOALS -->
+
+                    <div class="panel goals-panel">
+
+                        <div class="panel-heading">
+
+                            <div>
+                                <h3>Today's Goals</h3>
+                                <p>Stay consistent, stay healthy.</p>
+                            </div>
+
+                            <span class="goal-icon">✦</span>
+
+                        </div>
+
+                        <div class="goal-item">
+
+                            <div class="goal-icon-box blue-bg">◉</div>
+
+                            <div class="goal-info">
+                                <h4>Hydration</h4>
+                                <p id="waterGoalText">0 / 0 ml</p>
+
+                                <div class="progress-track">
+                                    <div id="goalWaterProgress" class="progress-fill"></div>
+                                </div>
+                            </div>
+
+                            <span id="waterPercent" class="goal-percent">0%</span>
+
+                        </div>
+
+
+                        <div class="goal-item">
+
+                            <div class="goal-icon-box purple-bg">☾</div>
+
+                            <div class="goal-info">
+                                <h4>Sleep</h4>
+                                <p id="sleepGoalText">0 / 8 hrs</p>
+
+                                <div class="progress-track">
+                                    <div id="goalSleepProgress" class="progress-fill"></div>
+                                </div>
+                            </div>
+
+                            <span id="sleepPercent" class="goal-percent">0%</span>
+
+                        </div>
+
+
+                        <div class="goal-item">
+
+                            <div class="goal-icon-box cyan-bg">♡</div>
+
+                            <div class="goal-info">
+                                <h4>Body Metrics</h4>
+                                <p id="metricGoalText">Not calculated</p>
+
+                                <div class="progress-track">
+                                    <div id="goalMetricProgress" class="progress-fill"></div>
+                                </div>
+                            </div>
+
+                            <span id="metricPercent" class="goal-percent">0%</span>
+
+                        </div>
+
+
+                        <div class="goal-message">
+                            ✨ Consistency is the secret to progress.
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </section>
+
+
+
+            <!-- BODY METRICS -->
+
+            <section id="metrics" class="content-section">
+
+                <div class="section-heading">
+
+                    <div>
+                        <h2>Body Metrics</h2>
+                        <p>Understand your body's metabolic indicators.</p>
+                    </div>
+
+                </div>
+
+
+                <div class="dashboard-grid">
+
+                    <div class="panel calculator-panel">
+
+                        <div class="panel-heading">
+                            <div>
+                                <h3>Metabolic Calculator</h3>
+                                <p>Enter your personal information.</p>
+                            </div>
+                            <span class="panel-menu">✚</span>
+                        </div>
+
+
+                        <form id="metricForm">
+
+                            <div class="form-grid">
+
+                                <div class="input-group">
+                                    <label>Full Name</label>
+                                    <input type="text" id="name" placeholder="Your name">
+                                </div>
+
+                                <div class="input-group">
+                                    <label>Age (years)</label>
+                                    <input type="number" id="age" min="15" max="120" placeholder="e.g. 20" required>
+                                </div>
+
+                                <div class="input-group">
+                                    <label>Height (cm)</label>
+                                    <input type="number" id="height" min="100" max="250" step="0.1" placeholder="e.g. 175" required>
+                                </div>
+
+                                <div class="input-group">
+                                    <label>Weight (kg)</label>
+                                    <input type="number" id="weight" min="20" max="350" step="0.1" placeholder="e.g. 72" required>
+                                </div>
+
+                                <div class="input-group full-width">
+                                    <label>Biological Sex (for BMR calculation)</label>
+
+                                    <select id="sex" required>
+                                        <option value="">Select</option>
+                                        <option value="male">Male</option>
+                                        <option value="female">Female</option>
+                                    </select>
+
+                                </div>
+
+                            </div>
+
+                            <button type="submit" class="primary-btn">
+                                Calculate My Metrics →
+                            </button>
+
+                        </form>
+
+                    </div>
+
+
+                    <div class="panel bmi-panel">
+
+                        <div class="panel-heading">
+                            <div>
+                                <h3>BMI Health Indicator</h3>
+                                <p>WHO adult BMI classification</p>
+                            </div>
+                        </div>
+
+                        <div class="bmi-result">
+
+                            <h1 id="bmiResult">--</h1>
+                            <span id="bmiCategory">Awaiting calculation</span>
+
+                        </div>
+
+                        <div class="bmi-gauge">
+
+                            <div class="gauge-bar"></div>
+
+                            <div class="gauge-marker" id="bmiMarker"></div>
+
+                        </div>
+
+                        <div class="gauge-labels">
+                            <span>Underweight</span>
+                            <span>Normal</span>
+                            <span>Overweight</span>
+                            <span>Obese</span>
+                        </div>
+
+                        <div class="bmi-details">
+
+                            <div>
+                                <span>Healthy range</span>
+                                <b>18.5 – 24.9</b>
+                            </div>
+
+                            <div>
+                                <span>Your BMR</span>
+                                <b id="bmrResult">-- kcal</b>
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+                <div class="info-note">
+                    ⓘ BMI is a screening measure and does not directly measure body fat or diagnose health conditions.
+                    WHO adult BMI categories are intended for adults aged 18 and above.
+                </div>
+
+            </section>
+
+
+
+            <!-- HYDRATION -->
+
+            <section id="hydration" class="content-section">
+
+                <div class="section-heading">
+
+                    <div>
+                        <h2>Hydration Tracker</h2>
+                        <p>Keep your body hydrated throughout the day.</p>
+                    </div>
+
+                </div>
+
+
+                <div class="dashboard-grid">
+
+                    <div class="panel water-panel">
+
+                        <div class="panel-heading">
+                            <div>
+                                <h3>Daily Water Intake</h3>
+                                <p>Your personalized hydration goal.</p>
+                            </div>
+                        </div>
+
+                        <div class="water-visual">
+
+                            <div class="water-glass">
+
+                                <div class="water-fill" id="waterGlassFill"></div>
+
+                                <div class="glass-content">
+                                    <h2 id="glassPercentage">0%</h2>
+                                    <p>COMPLETED</p>
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                        <div class="water-total">
+                            <h2 id="waterTotal">0 ml</h2>
+                            <p id="waterTargetText">Daily goal: 0 ml</p>
+                        </div>
+
+                        <div class="water-buttons">
+
+                            <button onclick="addWater(250)">+ 250 ml</button>
+                            <button onclick="addWater(500)">+ 500 ml</button>
+
+                        </div>
+
+                        <button class="reset-btn" onclick="resetWater()">Reset Today's Intake</button>
+
+                    </div>
+
+
+                    <div class="panel hydration-info">
+
+                        <h3>Hydration Insights</h3>
+
+                        <div class="insight-card">
+                            <span>💧</span>
+                            <div>
+                                <h4>Personalized Goal</h4>
+                                <p id="hydrationGoalInfo">Enter your body weight to calculate a starting goal.</p>
+                            </div>
+                        </div>
+
+                        <div class="insight-card">
+                            <span>⏰</span>
+                            <div>
+                                <h4>Stay Consistent</h4>
+                                <p>Spread water intake throughout the day instead of drinking large amounts at once.</p>
+                            </div>
+                        </div>
+
+                        <div class="insight-card">
+                            <span>✦</span>
+                            <div>
+                                <h4>Daily Reminder</h4>
+                                <p>Enable browser reminders to receive hydration notifications.</p>
+                            </div>
+                        </div>
+
+                        <button class="primary-btn" onclick="enableReminders()">
+                            Enable Hydration Reminders
+                        </button>
+
+                    </div>
+
+                </div>
+
+            </section>
+
+
+
+            <!-- SLEEP TRACKER -->
+
+            <section id="sleep" class="content-section">
+
+                <div class="section-heading">
+
+                    <div>
+                        <h2>Sleep Tracker</h2>
+                        <p>Track your sleep duration and restfulness.</p>
+                    </div>
+
+                </div>
+
+
+                <div class="dashboard-grid">
+
+                    <div class="panel sleep-panel">
+
+                        <div class="panel-heading">
+                            <div>
+                                <h3>Log Your Sleep</h3>
+                                <p>Record your last sleep session.</p>
+                            </div>
+
+                            <span class="sleep-icon">☾</span>
+                        </div>
+
+
+                        <form id="sleepForm">
+
+                            <div class="input-group">
+                                <label>Bedtime</label>
+                                <input type="time" id="bedtime" required>
+                            </div>
+
+                            <div class="input-group">
+                                <label>Wake-up Time</label>
+                                <input type="time" id="waketime" required>
+                            </div>
+
+                            <div class="input-group">
+                                <label>Sleep Quality</label>
+
+                                <div class="star-rating" id="starRating">
+
+                                    <span data-value="1">★</span>
+                                    <span data-value="2">★</span>
+                                    <span data-value="3">★</span>
+                                    <span data-value="4">★</span>
+                                    <span data-value="5">★</span>
+
+                                </div>
+
+                            </div>
+
+                            <button type="submit" class="primary-btn">
+                                Save Sleep Record →
+                            </button>
+
+                        </form>
+
+                    </div>
+
+
+                    <div class="panel sleep-summary">
+
+                        <div class="sleep-moon">☾</div>
+
+                        <h3>Your Sleep Summary</h3>
+
+                        <div class="sleep-hours">
+                            <h1 id="sleepSummary">0.0</h1>
+                            <span>HOURS</span>
+                        </div>
+
+                        <div class="sleep-summary-details">
+
+                            <div>
+                                <span>Quality</span>
+                                <b id="sleepQuality">Not rated</b>
+                            </div>
+
+                            <div>
+                                <span>Target</span>
+                                <b>7–9 hours</b>
+                            </div>
+
+                        </div>
+
+                        <p id="sleepAdvice">
+                            Log your sleep to see your personalized insights.
+                        </p>
+
+                    </div>
+
+                </div>
+
+            </section>
+
+
+
+            <!-- WELLNESS INSIGHTS -->
+
+            <section id="wellness" class="content-section">
+
+                <div class="section-heading">
+
+                    <div>
+                        <h2>Wellness Insights</h2>
+                        <p>Recommendations based on your daily health metrics.</p>
+                    </div>
+
+                </div>
+
+
+                <div class="panel advice-panel">
+
+                    <div class="advice-header">
+                        <span>✦</span>
+
+                        <div>
+                            <h3>Your Personal Health Assistant</h3>
+                            <p>Context-aware wellness recommendations</p>
+                        </div>
+                    </div>
+
+                    <div id="adviceList">
+
+                        <div class="advice-card">
+                            <span>✧</span>
+                            <div>
+                                <h4>Welcome to HealthHub</h4>
+                                <p>Enter your health details and log your daily activities to receive personalized recommendations.</p>
+                            </div>
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <!-- CALORIE ESTIMATOR -->
+
+                <div class="panel calorie-panel">
+
+                    <div class="panel-heading">
+
+                        <div>
+                            <h3>Calorie Target Estimator</h3>
+                            <p>Estimate your daily calorie needs based on your goal.</p>
+                        </div>
+
+                        <span class="calorie-icon">ϟ</span>
+
+                    </div>
+
+
+                    <div class="calorie-controls">
+
+                        <div class="input-group">
+                            <label>Fitness Goal</label>
+
+                            <select id="fitnessGoal">
+                                <option value="cut">Cut / Weight Loss</option>
+                                <option value="maintain" selected>Maintain Weight</option>
+                                <option value="bulk">Bulk / Weight Gain</option>
+                            </select>
+
+                        </div>
+
+                        <button class="primary-btn" onclick="calculateCalories()">
+                            Estimate Calories
+                        </button>
+
+                    </div>
+
+                    <div class="calorie-result">
+                        <h1 id="calorieValue">--</h1>
+                        <p>Estimated kcal / day</p>
+                        <span id="calorieDescription">Calculate your BMR first.</span>
+                    </div>
+
+                    <p class="small-note">
+                        This is a simplified estimate. Actual calorie needs depend on activity level and other factors.
+                    </p>
+
+                </div>
+
+            </section>
+
+
+
+            <!-- ANALYTICS -->
+
+            <section id="analytics" class="content-section">
+
+                <div class="section-heading">
+
+                    <div>
+                        <h2>Health Analytics</h2>
+                        <p>Understand your progress over the last 7 days.</p>
+                    </div>
+
+                </div>
+
+
+                <div class="panel chart-panel">
+
+                    <div class="panel-heading">
+                        <div>
+                            <h3>Your Health Trends</h3>
+                            <p>Daily hydration and sleep performance.</p>
+                        </div>
+
+                        <span class="live-badge">7 DAYS</span>
+                    </div>
+
+                    <div class="chart-container">
+                        <canvas id="healthChart"></canvas>
+                    </div>
+
+                </div>
+
+
+                <div class="panel history-panel">
+
+                    <div class="panel-heading">
+                        <div>
+                            <h3>Recent Health Activity</h3>
+                            <p>Your saved daily records.</p>
+                        </div>
+                    </div>
+
+                    <div id="historyList">
+                        <p class="empty-history">Your health records will appear here.</p>
+                    </div>
+
+                </div>
+
+            </section>
+
+
+
+            <!-- FOOTER -->
+
+            <footer>
+
+                <div>
+                    <h3>BodyBlueprint <span>✚</span></h3>
+                    <p>Designed for a healthier tomorrow.</p>
+                </div>
+
+                <button class="report-btn" onclick="downloadReport()">
+                    ↓ Download Health Report
+                </button>
+
+            </footer>
+
+
+            <div class="disclaimer">
+                <b>Medical Disclaimer:</b> BodyBlueprint provides general educational wellness information.
+                It is not a medical diagnostic tool and does not replace professional medical advice.
+                Hydration and calorie needs vary between individuals.
+            </div>
+
+
+        </main>
+
+    </div>
+
+
+
+    <!-- PROFILE MODAL -->
+
+    <div class="modal-overlay" id="profileModal">
+
+        <div class="modal">
+
+            <button class="modal-close" onclick="closeProfile()">×</button>
+
+            <h2>Personal Profile</h2>
+            <p>Your information is stored locally in this browser.</p>
+
+            <div class="input-group">
+                <label>Your Name</label>
+                <input type="text" id="profileName" placeholder="Enter your name">
+            </div>
+
+            <button class="primary-btn" onclick="saveProfile()">
+                Save Profile
+            </button>
+
+        </div>
+
+    </div>
+
+
+    <script src="script.js"></script>
+
+</body>
+</html>
